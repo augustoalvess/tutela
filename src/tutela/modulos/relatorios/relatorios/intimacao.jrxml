@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="intimacao" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="239"/>
+	<parameter name="idocorrencia" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT *,
+	dataPorExtenso(now()::date) AS data_hoje_estenso,
+	(SELECT nome FROM pessoa WHERE idpessoa = O.pessoaId) AS conselheiro
+
+  FROM ocorrenciaPessoa OP
+INNER JOIN pessoa PI --Pessoa intimada
+ON PI.idPessoa = OP.idPessoa
+INNER JOIN ocorrencia O
+ON O.idOcorrencia = OP.idOcorrencia
+ WHERE OP.idocorrencia = $P{idocorrencia}::int]]>
+	</queryString>
+	<field name="idocorrencia" class="java.lang.Integer"/>
+	<field name="idpessoa" class="java.lang.Integer"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="estadocivil" class="java.lang.String"/>
+	<field name="datanascimento" class="java.sql.Date"/>
+	<field name="sexo" class="java.lang.String"/>
+	<field name="origemetnica" class="java.lang.String"/>
+	<field name="estado" class="java.lang.String"/>
+	<field name="cidade" class="java.lang.String"/>
+	<field name="bairro" class="java.lang.String"/>
+	<field name="rua" class="java.lang.String"/>
+	<field name="numero" class="java.lang.Integer"/>
+	<field name="complemento" class="java.lang.String"/>
+	<field name="rg" class="java.lang.String"/>
+	<field name="cpf" class="java.lang.String"/>
+	<field name="telefoneresidencial" class="java.lang.String"/>
+	<field name="telefonecelular" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="pessoaid" class="java.lang.Integer"/>
+	<field name="dataocorrencia" class="java.lang.String"/>
+	<field name="nomedeclarante" class="java.lang.String"/>
+	<field name="telefonedeclarante" class="java.lang.String"/>
+	<field name="criancaid" class="java.lang.Integer"/>
+	<field name="estadoocorreu" class="java.lang.String"/>
+	<field name="cidadeocorreu" class="java.lang.String"/>
+	<field name="bairroocorreu" class="java.lang.String"/>
+	<field name="ruaocorreu" class="java.lang.String"/>
+	<field name="numeroocorreu" class="java.lang.String"/>
+	<field name="complementoocorreu" class="java.lang.String"/>
+	<field name="declaracao" class="java.lang.String"/>
+	<field name="observacao" class="java.lang.String"/>
+	<field name="dataintimacaoprocessada" class="java.lang.String"/>
+	<field name="dataintimacao" class="java.lang.String"/>
+	<field name="estadointimacao" class="java.lang.String"/>
+	<field name="cidadeintimacao" class="java.lang.String"/>
+	<field name="bairrointimacao" class="java.lang.String"/>
+	<field name="ruaintimacao" class="java.lang.String"/>
+	<field name="numerointimacao" class="java.lang.String"/>
+	<field name="complementointimacao" class="java.lang.String"/>
+	<field name="providenciatomada" class="java.lang.String"/>
+	<field name="parecerconclusivo" class="java.lang.String"/>
+	<field name="situacao" class="java.lang.String"/>
+	<field name="intimacao" class="java.lang.String"/>
+	<field name="data_hoje_estenso" class="java.lang.String"/>
+	<field name="conselheiro" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="390">
+			<image>
+				<reportElement x="235" y="2" width="94" height="74"/>
+				<imageExpression><![CDATA["/var/www/tutela/src/tutela/publico/imagens/logo_padrao.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="76" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ESTADO DO RIO GRANDE DO SUL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="96" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[MUNICIPIO DE ESTRELA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="116" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CONSELHO TUTELAR]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="77" y="137" width="401" height="50"/>
+				<box rightPadding="0"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{data_hoje_estenso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="77" y="187" width="401" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[INTIMAÇÃO DE OCORRENCIA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="77" y="219" width="401" height="115"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top" markup="none"/>
+				<textFieldExpression><![CDATA["   Prezado(a) " + $F{nome} + ", intimamos sua presença por via deste documento, no dia " + $F{dataintimacao} + " do endereço " + $F{ruaintimacao} + " - " + $F{numerointimacao} + ", situado no bairro " + $F{bairrointimacao} + " da cidade de " + $F{cidadeintimacao} + ", referente ao ocorrido registrado pelo conselho tutelar no dia " + $F{dataocorrencia} + ". " + $F{intimacao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="77" y="334" width="401" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Atenciosamente]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="77" y="351" width="401" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{conselheiro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="77" y="371" width="401" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Conselheiro tutelar]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="59">
+			<staticText>
+				<reportElement x="77" y="16" width="401" height="13"/>
+				<textElement/>
+				<text><![CDATA[Associação PIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="77" y="29" width="401" height="13"/>
+				<textElement/>
+				<text><![CDATA[Diretoria da Associação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="77" y="42" width="401" height="13"/>
+				<textElement/>
+				<text><![CDATA[ESTRELA - RS]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement x="77" y="0" width="401" height="11"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Conselho tutelar de Estrela]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="77" y="11" width="401" height="11"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Rua Coronel Müssnich, 45l – Centro – CEP 95880-000 – Estrela – RS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="77" y="22" width="401" height="11"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fone: (51) 4545454 / fax: (51) 3712 2518 – E-mail: mmmmm@nnnnn-rs.gov.br]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>
